@@ -9,7 +9,7 @@ module.exports = {
     cache: true,
     entry: {
         app: path.resolve(__dirname, 'app/app.ts'),
-        vendor: ['jquery', './app/sass/vendor.scss', 'bootstrap-sass']
+        vendor: ['jquery', './app/sass/vendor.scss', 'bootstrap-sass', 'toastr']
     },
     output: {
         path: path.resolve(__dirname, 'dist/'),
