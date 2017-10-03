@@ -2,8 +2,12 @@
 <html>
 <head>
     <title>Sorting Algorithms</title>
-    <link rel="stylesheet" href="dist/vendor.min.css" />
-    <link rel="stylesheet" href="dist/app.min.css" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <% for(var i = 0; i < htmlWebpackPlugin.files.css.length; i++) { %>
+    <link rel="stylesheet" href="<%= htmlWebpackPlugin.files.css[i] %>" />
+    <% } %>
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -61,7 +65,8 @@
         </div>
     </div>
 
-    <script src="dist/vendor.min.js"></script>
-    <script src="dist/app.min.js"></script>
+    <% for(var i = 0; i < htmlWebpackPlugin.files.js.length; i++) { %>
+    <script src="<%= htmlWebpackPlugin.files.js[i] %>"></script>
+    <% } %>
 </body>
 </html>

@@ -1,6 +1,7 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
@@ -8,11 +9,11 @@ module.exports = {
     cache: true,
     entry: {
         app: path.resolve(__dirname, 'app/app.ts'),
-        vendor: path.resolve(__dirname, 'app/vendor.ts')
+        vendor: ['jquery', './app/sass/vendor.scss', 'bootstrap-sass']
     },
     output: {
         path: path.resolve(__dirname, 'dist/'),
-        filename: '[name].min.js'
+        filename: '[name]-[hash].min.js'
     },
     resolve: {
         extensions: ['.ts', '.js']
@@ -65,12 +66,20 @@ module.exports = {
     },
     plugins: [
         new WebpackCleanupPlugin(),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor'
+        }),
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery'
         }),
+        new HtmlWebpackPlugin({
+            inject: false,
+            template: 'index-template.html',
+            filename: '../index.html'
+        }),
         new ExtractTextPlugin({
-            filename: '[name].min.css',
+            filename: '[name]-[hash].min.css',
             allChunks: true
         })
     ]

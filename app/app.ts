@@ -1,6 +1,9 @@
 import './sass/app.scss';
 
+import toastr from "toastr";
+
 import { SortingAlgorithm } from './ts/sort';
+
 
 function generateRandomArray(len: number): number[] {
     let arr: number[] = [];
@@ -14,7 +17,7 @@ function generateRandomArray(len: number): number[] {
 
 const runBtn = document.getElementById('run-btn');
 if(runBtn) {
-    runBtn.onclick = function() {
+    runBtn.addEventListener('click', () => {
         const algorithmEl = <HTMLInputElement>document.getElementById('algorithm');
         const itemsEl = <HTMLInputElement>document.getElementById('items');
         const durationPanelEl = document.getElementById('duration-panel');
@@ -41,5 +44,7 @@ if(runBtn) {
         durationPanelEl.style.display = 'block';
 
         durationEl.innerHTML = ((end.getTime() - start.getTime()) / 1000).toFixed(3);
-    }
+
+        toastr.success('The operation was completed successfully!');
+    });
 }

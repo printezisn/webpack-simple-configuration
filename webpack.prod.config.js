@@ -7,7 +7,8 @@ config.plugins.push(new OptimizeCssAssetsPlugin({
     assetNameRegExp: /\.min.css$/
 }));
 config.plugins.push(new webpack.optimize.UglifyJsPlugin({
-    extractComments: true
+    extractComments: true,
+    parallel: true
 }));
 
 

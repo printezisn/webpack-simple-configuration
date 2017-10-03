@@ -5,6 +5,7 @@ A sample project with a simple webpack configuration that covers the following n
 * Convert typescript files to javascript.
 * Extract referenced sass rules into css files.
 * Create a separate bundle for vendor libraries (jquery, bootstrap, etc).
+* Inject the file references to an html file.
 * Have a different configuration for development and production.
 
 ## Getting Started
@@ -23,6 +24,7 @@ You may run the following commands to run the sample project:
 
 1. **npm install**: To install the node modules.
 1. **npm run build**: To build the modules.
+1. **npm run build-prod**: To build the modules for production. The generated files are minified.
 1. **npm start**: To start the application.
 
 ## License
