@@ -42,9 +42,9 @@ module.exports = {
             {
                 test: /\.(scss|sass)$/,
                 use: [
-                	MiniCssExtractPlugin.loader,
-                	'css-loader',
-                	'sass-loader'
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader'
                 ]
             },
             {
@@ -64,10 +64,10 @@ module.exports = {
         ]
     },
     plugins: [
-    	new CleanWebpackPlugin(['dist']),
-    	new MiniCssExtractPlugin({
-    		filename: '[name]-[chunkhash].min.css'
-    	}),
+        new CleanWebpackPlugin(['dist']),
+        new MiniCssExtractPlugin({
+            filename: '[name]-[chunkhash].min.css'
+        }),
         new HtmlWebpackPlugin({
             inject: false,
             template: 'index-template.html',
@@ -76,17 +76,17 @@ module.exports = {
         new webpack.HashedModuleIdsPlugin()
     ],
     optimization: {
-    	splitChunks: {
-    		cacheGroups: {
-    			commons: {
-    				test: /[\\/]node_modules[\\/]/,
-    				name: 'vendor',
-    				chunks: 'all'
-    			}
-    		}
-    	},
-    	runtimeChunk: {
-    		name: 'runtime.min.js'
-    	}
+        splitChunks: {
+            cacheGroups: {
+                commons: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendor',
+                    chunks: 'all'
+                }
+            }
+        },
+        runtimeChunk: {
+            name: 'runtime.min.js'
+        }
     }
 };
