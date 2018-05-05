@@ -1,8 +1,12 @@
+import 'bulma/bulma.sass';
+import 'toastr/toastr.scss';
+
 import './sass/app.scss';
 
 import toastr from "toastr";
 
 import { SortingAlgorithm } from './ts/sort';
+import { initNavbar } from './ts/page';
 
 
 function generateRandomArray(len: number): number[] {
@@ -15,36 +19,35 @@ function generateRandomArray(len: number): number[] {
     return arr;
 }
 
-const runBtn = document.getElementById('run-btn');
-if(runBtn) {
+document.addEventListener('DOMContentLoaded', function() {
+    initNavbar();
+  
+    const runBtn = <HTMLElement>document.getElementById('run-btn');
     runBtn.addEventListener('click', () => {
         const algorithmEl = <HTMLInputElement>document.getElementById('algorithm');
         const itemsEl = <HTMLInputElement>document.getElementById('items');
-        const durationPanelEl = document.getElementById('duration-panel');
-        const durationEl = document.getElementById('duration');
-
-        if(!algorithmEl || !itemsEl || !durationPanelEl || !durationEl) {
-            return;
-        }
+        const durationPanelEl = <HTMLElement>document.getElementById('duration-panel');
+        const durationEl = <HTMLElement>document.getElementById('duration');
+    
         if(isNaN(Number(itemsEl.value))) {
-            alert('Items must be a number');
+            toastr.error('Items must be a number');
             return;
         }
-
+    
         let algorithm = SortingAlgorithm.choose<number>(algorithmEl.value);
         const len = Math.abs(Number(itemsEl.value));
         let randomArray: number[] = generateRandomArray(len);
-
-        let start: Date = new Date();
+    
+        let start = new Date();
         durationPanelEl.style.display = 'none';
-
+    
         algorithm.sort(randomArray);
 
         let end: Date = new Date();
-        durationPanelEl.style.display = 'block';
-
+        durationPanelEl.style.display = '';
+    
         durationEl.innerHTML = ((end.getTime() - start.getTime()) / 1000).toFixed(3);
-
+    
         toastr.success('The operation was completed successfully!');
     });
-}
+});

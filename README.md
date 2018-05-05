@@ -4,7 +4,7 @@ A sample project with a simple webpack configuration that covers the following n
 
 * Convert typescript files to javascript.
 * Extract referenced sass rules into css files.
-* Create a separate bundle for vendor libraries (jquery, bootstrap, etc).
+* Create a separate bundle for vendor libraries (bulma, toastr, etc).
 * Inject the file references to an html file.
 * Have a different configuration for development and production.
 
@@ -12,11 +12,12 @@ A sample project with a simple webpack configuration that covers the following n
 
 If this configuration covers your needs also, you just have to download the following files and include them in your project:
 
-* webpack.config.js
-* webpack.prod.config.js
+* webpack.common.js
+* webpack.dev.js
+* webpack.prod.js
 * package.json
 
-The **package.json** file contains the required libraries to run webpack (webpack, babel-core, ts-loader, etc.), some optional libraries (jquery, bootstrap, etc) that are used by the sample project and commands to build the modules and run the application.
+The **package.json** file contains the required libraries to run webpack (webpack, babel-core, ts-loader, etc.), some optional libraries (bulma, toastr, etc) that are used by the sample project and commands to build the modules and run the application.
 
 ## Running the Sample Project
 

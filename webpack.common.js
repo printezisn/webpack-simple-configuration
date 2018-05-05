@@ -1,19 +1,17 @@
 const path = require('path');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const WebpackCleanupPlugin = require('webpack-cleanup-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-    watch: true,
     cache: true,
     entry: {
-        app: path.resolve(__dirname, 'app/app.ts'),
-        vendor: ['jquery', './app/sass/vendor.scss', 'bootstrap-sass', 'toastr']
+        app: path.resolve(__dirname, 'app/app.ts')
     },
     output: {
         path: path.resolve(__dirname, 'dist/'),
-        filename: '[name]-[hash].min.js'
+        filename: '[name]-[chunkhash].min.js'
     },
     resolve: {
         extensions: ['.ts', '.js']
@@ -42,11 +40,12 @@ module.exports = {
                 exclude: [path.resolve(__dirname, 'node_modules')]
             },
             {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    use: ['css-loader', 'sass-loader']
-                }),
-                exclude: [path.resolve(__dirname, 'node_modules')]
+                test: /\.(scss|sass)$/,
+                use: [
+                	MiniCssExtractPlugin.loader,
+                	'css-loader',
+                	'sass-loader'
+                ]
             },
             {
                 test: /\.(png|jpg|jpeg|gif|svg)$/,
@@ -65,22 +64,29 @@ module.exports = {
         ]
     },
     plugins: [
-        new WebpackCleanupPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
-        }),
-        new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery'
-        }),
+    	new CleanWebpackPlugin(['dist']),
+    	new MiniCssExtractPlugin({
+    		filename: '[name]-[chunkhash].min.css'
+    	}),
         new HtmlWebpackPlugin({
             inject: false,
             template: 'index-template.html',
             filename: '../index.html'
         }),
-        new ExtractTextPlugin({
-            filename: '[name]-[hash].min.css',
-            allChunks: true
-        })
-    ]
+        new webpack.HashedModuleIdsPlugin()
+    ],
+    optimization: {
+    	splitChunks: {
+    		cacheGroups: {
+    			commons: {
+    				test: /[\\/]node_modules[\\/]/,
+    				name: 'vendor',
+    				chunks: 'all'
+    			}
+    		}
+    	},
+    	runtimeChunk: {
+    		name: 'runtime.min.js'
+    	}
+    }
 };
